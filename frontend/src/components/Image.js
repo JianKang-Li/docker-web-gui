@@ -48,10 +48,10 @@ const Image = () => {
                 <div className="spinner-border"></div> 
             :
                 <div>
-                    <div class="btn-group">
+                    <div className="btn-group">
                         <h2 id="actions">Actions: </h2>
-                        <button class="btn btn-dark" onClick={() => removeImage(image.Id)}>
-                            <i class="bi bi-trash"></i>Remove
+                        <button className="btn btn-dark" onClick={() => removeImage(image.Id)}>
+                            <i className="bi bi-trash"></i>Remove
                         </button>
                     </div>
 

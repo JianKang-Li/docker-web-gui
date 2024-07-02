@@ -29,6 +29,35 @@ app.get('/api/containers/:containerName', (req, res) => {
         })
 })
 
+app.get('/api/containers/state/:containerName', (req, res) => {
+  const containerName = "/" + req.params.containerName
+
+  docker.listContainers({all: true})
+        .then(containers => {
+          const containerInfo = containers.find((container) => container.Names[0] === containerName)
+          if (containerInfo.Id) {
+            const container = docker.getContainer(containerInfo.Id)
+            container.stats({ stream: false }, (err, stats) => {
+              if (err) throw err;
+              // 打印容器 ID 和资源占用信息
+              // 计算CPU使用率
+              const cpuDelta = stats.cpu_stats.cpu_usage.total_usage - stats.precpu_stats.cpu_usage.total_usage
+              const systemDelta = stats.cpu_stats.system_cpu_usage - stats.precpu_stats.system_cpu_usage
+              const cpuUsage = (cpuDelta / systemDelta) * stats.cpu_stats.online_cpus * 100
+
+              // 获取内存使用量
+              const memoryUsage = stats.memory_stats.usage
+
+              const result = {
+                cpu: cpuUsage,
+                memory: memoryUsage
+              }
+              res.send(result)
+            })
+          }
+        })
+})
+
 app.post('/api/containers/:containerId/stop', (req, res) => {
   const containerId = req.params.containerId
 

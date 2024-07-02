@@ -9,7 +9,8 @@ const Container = () => {
     const navigate = useNavigate();
     const [container, setContainer] = useState()
     const [running, setRunning] = useState()
-    
+    const [usedInfo, setUsedInfo] = useState()
+
     useEffect(() => {
         const getContainer = async () => {
             const res = await axios.get(`/api/containers/${containerName}`)
@@ -17,6 +18,19 @@ const Container = () => {
         }
         getContainer()
     }, [containerName, running])
+
+    useEffect(() => {
+        //Implementing the setInterval method
+        let interval = null
+        if (container?.State.Running) {
+          interval = setInterval(() => {
+            getUsedInfo(containerName)
+          }, 1000)
+        }
+
+        //Clearing the interval
+        return () => clearInterval(interval)
+    }, [containerName, container])
 
     const removeContainer = async (container_id) => {
         if(!container.State.Running) {
@@ -36,7 +50,7 @@ const Container = () => {
             toast.success(`Container ${container_id} started`)
             setRunning(true)
         }
-    }    
+    }
 
     const stopContainer = async (container_id) => {
         const res = await axios.post(`/api/containers/${container_id}/stop`)
@@ -44,26 +58,44 @@ const Container = () => {
             toast.success(`Container ${container_id} stopped`)
             setRunning(false)
         }
-    }    
+    }
+
+    const getUsedInfo = async (container_name, user = false) => {
+      const res = await axios.get(`/api/containers/state/${container_name}`)
+        if(res.status === 200) {
+            setUsedInfo(res.data)
+            if (user) {
+              toast.success(`手动刷新成功`)
+            }
+        }
+    }
 
     return (
         <div>
             <h1>Container Details</h1>
 
-            {container === undefined ? 
-                <div className="spinner-border"></div> 
+            {container === undefined ?
+                <div className="spinner-border"></div>
             :
+              <div>
                 <div>
-                    <div class="btn-group">
+                  <p>CPU: {`${usedInfo?.cpu  || 0}%`}</p>
+                  <p>MEMORY: {usedInfo?.memory || 0} Gib</p>
+                  <button className="btn btn-dark" onClick={() => getUsedInfo(container.Name.substring(1), true)}>
+                      获取使用资源信息
+                  </button>
+                </div>
+                <div>
+                    <div className="btn-group">
                         <h2 id="actions">Actions: </h2>
-                        <button class="btn btn-dark" onClick={() => startContainer(container.Id)} disabled={container.State.Running}>
-                            <i class="bi bi-play"></i>Start
+                        <button className="btn btn-dark" onClick={() => startContainer(container.Id)} disabled={container.State.Running}>
+                            <i className="bi bi-play"></i>Start
                         </button>
-                        <button class="btn btn-dark" onClick={() => stopContainer(container.Id)} disabled={!container.State.Running}>
-                            <i class="bi bi-stop"></i> Stop
+                        <button className="btn btn-dark" onClick={() => stopContainer(container.Id)} disabled={!container.State.Running}>
+                            <i className="bi bi-stop"></i> Stop
                         </button>
-                        <button class="btn btn-dark " onClick={() => removeContainer(container.Id)}>
-                            <i class="bi bi-trash"></i>Remove
+                        <button className="btn btn-dark " onClick={() => removeContainer(container.Id)}>
+                            <i className="bi bi-trash"></i>Remove
                         </button>
                     </div>
 
@@ -125,10 +157,10 @@ const Container = () => {
                                         <tr>
                                             <td rowSpan={container.Config.Env.length + 1}>ENV</td>
                                         </tr>
-                                        {container.Config.Env.map(env => {
+                                        {container.Config.Env.map((env, index) => {
                                             const [k, v] = env.split("=")
                                             return (
-                                                <tr key={k}>
+                                                <tr key={`Config_env_${index}`}>
                                                     <td>{k}</td>
                                                     <td>{v}</td>
                                                 </tr>
@@ -141,7 +173,7 @@ const Container = () => {
                     </div>
 
                     <div className="col-sm-6">
-                         <table className="table table-bordered">
+                        <table className="table table-bordered">
                             <thead >
                                 <tr className="table-dark">
                                     <th colSpan={2}>Volumes</th>
@@ -208,9 +240,10 @@ const Container = () => {
                                 })}
                             </tbody>
                         </table>
-                    </div>  
+                    </div>
                     }
                 </div>
+              </div>
             }
         </div>
     )

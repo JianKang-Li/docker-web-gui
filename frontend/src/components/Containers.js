@@ -5,7 +5,7 @@ import moment from 'moment';
 
 const Containers = () => {
     const [containers, setContainers] = useState()
-    
+
     useEffect(() => {
         const getContainers = async () => {
             const res = await axios.get('/api/containers')
@@ -31,26 +31,25 @@ const Containers = () => {
 
         return published_ports
     }
-    
     return (
         <div>
             <h1>Containers</h1>
 
-            {containers === undefined ? 
-                <div className="spinner-border"></div> 
+            {containers === undefined ?
+                <div className="spinner-border"></div>
             :
                 <table className="table table-bordered">
                     <thead className="table-dark">
                         <tr>
                             <th>Name</th>
                             <th>State</th>
+                            <th>Status</th>
                             <th>Image</th>
                             <th>Created</th>
                             <th>IP Address</th>
                             <th>Published Ports</th>
                         </tr>
                     </thead>
-                    
                     <tbody>
                         {containers.map(container => {
                             const name = container.Names[0].substring(1)
@@ -60,6 +59,7 @@ const Containers = () => {
                                 <tr key={container.Id}>
                                     <td><Link to={`/containers/${name}`}>{name}</Link></td>
                                     <td>{container.State}</td>
+                                    <td>{container.Status}</td>
                                     <td>{container.Image}</td>
                                     <td>{created}</td>
                                     <td>{container.NetworkSettings.Networks.bridge?.IPAddress || '-'}</td>

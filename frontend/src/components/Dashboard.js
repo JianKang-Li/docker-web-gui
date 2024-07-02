@@ -28,28 +28,28 @@ const Dashboard = () => {
       {counts === undefined ?
         <div className="spinner-border"></div>
         :
-        <div class="row">
-          <div class="col">
-              <div class="card">
-                <div class="card-body">
-                  <Link to="/containers"><h5 class="card-title"><i class="bi bi-box"></i>Containers</h5></Link>
-                  <p class="card-text">{counts.containers}</p>
+        <div className="row">
+          <div className="col">
+              <div className="card">
+                <div className="card-body">
+                  <Link to="/containers"><h5 className="card-title"><i className="bi bi-box"></i>Containers</h5></Link>
+                  <p className="card-text">{counts.containers}</p>
                 </div>
               </div>
           </div>
-          <div class="col">
-              <div class="card">
-                <div class="card-body">
-                <Link to="/images"><h5 class="card-title"><i class="bi bi-layers"></i>Images</h5></Link>
-                  <p class="card-text">{counts.images}</p>
+          <div className="col">
+              <div className="card">
+                <div className="card-body">
+                <Link to="/images"><h5 className="card-title"><i className="bi bi-layers"></i>Images</h5></Link>
+                  <p className="card-text">{counts.images}</p>
                 </div>
               </div>
           </div>
-          <div class="col">
-              <div class="card">
-                <div class="card-body">
-                <Link to="/volumes"><h5 class="card-title"><i class="bi bi-sd-card"></i>Volumes</h5></Link>
-                  <p class="card-text">{counts.volumes}</p>
+          <div className="col">
+              <div className="card">
+                <div className="card-body">
+                <Link to="/volumes"><h5 className="card-title"><i className="bi bi-sd-card"></i>Volumes</h5></Link>
+                  <p className="card-text">{counts.volumes}</p>
                 </div>
               </div>
           </div>

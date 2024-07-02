@@ -1,6 +1,8 @@
 # Docker Web GUI
 
-[复刻自](https://github.com/orensaldanha/docker-web-gui)
+复刻自 [项目](https://github.com/orensaldanha/docker-web-gui)
+
+对其进行了代码优化和功能增加
 
 A web application that provides an alternative to the docker cli to interact with the docker engine.
 This project uses the [Dockerode](https://github.com/apocas/dockerode "Dockerode") package to interact with the docker engine
@@ -16,6 +18,7 @@ Supports some of the basic docker interactions like:
 * Removing an image
 * Displaying all volumes
 * Removing volumes
++ 查看占用资源
 
 ## Software Tools Used 
 
@@ -25,7 +28,11 @@ Supports some of the basic docker interactions like:
 * React
 * [Dockerode](https://github.com/apocas/dockerode "Dockerode")
 
-## Instructions
+## 如何使用
 
-* [add user to docker group](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user "add user to docker group")
-* `npm run start`
+* `cd fronted`
+* `yarn`
+* `yarn build`
+* `cd ..`
+* `yarn`
+* `yarn start`
