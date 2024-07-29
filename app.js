@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
-require('dotenv').config();
+const net = require('net')
+require('dotenv').config()
 const port = process.env.PORT | 3000
 const path = require('path')
 const Docker = require('dockerode')
@@ -152,6 +153,23 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, './frontend/build/index.html'))
 })
 
-app.listen(port, () => {
-  console.log(`http://localhost:${port}`)
+
+function findPort(startPort, callback) {
+  const server = net.createServer();
+  server.once('error', err => {
+    if (err.code !== 'EADDRINUSE') return callback(err);
+    findPort(startPort + 1, callback);
+  });
+  server.once('listening', () => {
+    server.close(() => {
+      callback(null, startPort);
+    });
+  });
+  server.listen(startPort);
+}
+
+findPort(port, (err, port) => {
+  app.listen(port, () => {
+    console.log(`http://localhost:${port}`)
+  })
 })
