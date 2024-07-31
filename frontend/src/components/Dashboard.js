@@ -1,10 +1,10 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import axios from "axios"
+import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 
 const Dashboard = () => {
 
-  const [counts, setCounts] = useState();
+  const [counts, setCounts] = useState()
 
   useEffect(() => {
     const getCounts = async () => {
@@ -30,34 +30,34 @@ const Dashboard = () => {
         :
         <div className="row">
           <div className="col">
-              <div className="card">
-                <div className="card-body">
-                  <Link to="/containers"><h5 className="card-title"><i className="bi bi-box"></i>Containers</h5></Link>
-                  <p className="card-text">{counts.containers}</p>
-                </div>
+            <div className="card">
+              <div className="card-body">
+                <Link to="/containers"><h5 className="card-title"><i className="bi bi-box"></i>Containers</h5></Link>
+                <p className="card-text">{counts.containers}</p>
               </div>
+            </div>
           </div>
           <div className="col">
-              <div className="card">
-                <div className="card-body">
+            <div className="card">
+              <div className="card-body">
                 <Link to="/images"><h5 className="card-title"><i className="bi bi-layers"></i>Images</h5></Link>
-                  <p className="card-text">{counts.images}</p>
-                </div>
+                <p className="card-text">{counts.images}</p>
               </div>
+            </div>
           </div>
           <div className="col">
-              <div className="card">
-                <div className="card-body">
+            <div className="card">
+              <div className="card-body">
                 <Link to="/volumes"><h5 className="card-title"><i className="bi bi-sd-card"></i>Volumes</h5></Link>
-                  <p className="card-text">{counts.volumes}</p>
-                </div>
+                <p className="card-text">{counts.volumes}</p>
               </div>
+            </div>
           </div>
         </div>
 
       }
     </div>
-  );
+  )
 }
 
 export default Dashboard

@@ -5,7 +5,7 @@ const Header = () => {
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a className="navbar-brand"  onClick={() => navigate('/')} >
+      <a className="navbar-brand" onClick={() => navigate('/')} >
         <img src={`${process.env.PUBLIC_URL}/logo_docker.png`} width="30" height="30" alt="" />
       </a>
       <div className="collapse navbar-collapse" id="navbarNavDropdown">
@@ -25,7 +25,7 @@ const Header = () => {
         </ul>
       </div>
     </nav>
-  );
+  )
 }
 
 export default Header

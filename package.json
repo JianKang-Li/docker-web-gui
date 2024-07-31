@@ -6,16 +6,29 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "spell-check": "cspell *.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "dockerode": "^4.0.2",
-    "dotenv": "^16.0.2",
+    "dotenv": "^16.4.5",
     "express": "^5.0.0-beta.2"
   },
   "devDependencies": {
+    "cspell": "^8.13.0",
     "nodemon": "^3.1.4"
+  },
+  "cspell": {
+    "dictionaries": [
+      "allowed-words"
+    ],
+    "dictionaryDefinitions": [
+      {
+        "name": "allowed-words",
+        "path": "./.cspell-words.txt",
+        "addWords": true
+      }
+    ]
   }
 }
