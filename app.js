@@ -38,7 +38,7 @@ const createApp = (port) => {
     docker.listContainers({ all: true })
       .then(containers => {
         const containerInfo = containers.find((container) => container.Names[0] === containerName)
-        if (containerInfo.Id) {
+        if (containerInfo?.Id) {
           const container = docker.getContainer(containerInfo.Id)
           container.stats({ stream: false }, (err, stats) => {
             if (err) throw err;

@@ -31,10 +31,14 @@
       }
     ]
   },
-"bin": "app.js",
-"pkg": {
-  "assets": ["frontend/build/*"],
-  "outputPath": "dist",
-  "targets": ["node18-linux-x64"]
-}
+  "bin": "app.js",
+  "pkg": {
+    "assets": [
+      "frontend/build/*"
+    ],
+    "outputPath": "dist",
+    "targets": [
+      "node18-linux-x64"
+    ]
+  }
 }
